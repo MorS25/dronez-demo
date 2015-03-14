@@ -19,3 +19,11 @@ The goals of this project are to:
 1.  Learn reward-maximising ``Policy<TargetRelativeDroneStateWithRecentActions, DroneAction>`` implementations for the aim of minimising distance-to-target.
 2.  Implement AbstractCommandFactory implementation to load these policies into appropriate commands.
 3.  Demonstrate test Flights
+
+To fly real [ODCDrone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/domain/ODCDrone.java) using webcam position estimation:
+
+mvn spring-boot:run -Dspring.profiles.active=ardrone -Djava.awt.headless=false
+
+To fly [MockDrone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/mock/MockDrone.java) using similated position estimation, using a learned model of the Drone:
+
+mvn spring-boot:run -Dspring.profiles.active=test -Djava.awt.headless=false
