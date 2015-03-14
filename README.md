@@ -24,6 +24,6 @@ To fly real [ODCDrone](https://github.com/michaellavelle/dronez/blob/master/src/
 
 mvn spring-boot:run -Dspring.profiles.active=ardrone -Djava.awt.headless=false
 
-To fly [MockDrone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/mock/MockDrone.java) using similated position estimation, using a learned model of the Drone:
+To fly [MockDrone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/mock/MockDrone.java) with simulated position estimation generated from a learned model of the Drone:
 
 mvn spring-boot:run -Dspring.profiles.active=test -Djava.awt.headless=false
