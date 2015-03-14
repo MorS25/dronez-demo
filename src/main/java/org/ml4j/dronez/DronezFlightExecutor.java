@@ -43,6 +43,21 @@ public class DronezFlightExecutor {
 	public void fly(DronezFlight flight)
 	{
 		drone.executeLaunchSequence();
+		
+		DroneState droneState = webCamObserver.getCurrentState();
+
+		while (droneState == null || droneState.getLeftRightPositionVelocity() == null) {
+			try {
+				Thread.sleep(1000);
+				logger.info("Looking for drone");
+			} catch (InterruptedException e) {
+			}
+			droneState = webCamObserver.getCurrentState();
+		}
+		logger.info("Drone aquired");
+
+		
+	
 		logger.info("Executing Main Flight");
 		flight.fly(this,commandFactory);
 		drone.executeLandingSequence();
