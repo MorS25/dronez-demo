@@ -14,7 +14,7 @@ When the Drone receives a [``PolicyCommand<DroneState,P,DroneAction>``](https://
 
 The selected [DroneAction](https://github.com/ml4j/dronez-core/blob/master/src/main/java/org/ml4j/dronez/DroneAction.java)s are sent to the Drone to be sent on to the ARDrone.
 
-The aim of this project is to implement an AbstractCommandFactory which creates commands that minimise distance to a specified target position using a learned Policy<TargetRelativeDroneStateWithRecentActions, DroneAction> 
+The aim of this project is implement a AbstractCommandFactory that creates commands by using a ''Policy<TargetRelativeDroneStateWithRecentActions, DroneAction>'' so that distance to a specified target can be minimised.  Once we have this implementation,  the aim is to demonstract test flights.
 
 This project is currently configured with an implementation of AbstractCommandFactory   ( [DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory] (https://github.com/ml4j/dronez-demo/blob/master/src/main/java/org/ml4j/dronez/DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory.java) ) which:
 
