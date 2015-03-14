@@ -44,6 +44,8 @@ public class DronezApplication {
 		
 		// Execute demo flight
 		flightExecutor.fly(new DemoFlight());
+	
+		
 	}
 	
 

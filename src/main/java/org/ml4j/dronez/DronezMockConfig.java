@@ -36,6 +36,9 @@ public class DronezMockConfig {
 	@Value("${forwardBackContinuousStatePolicy.name}")
 	private String forwardBackPolicyName;
 	
+	@Value("${historySerializationDir}")
+	private String historySerializationDir;
+	
 	/**
 	 * Create a StateActionController<DroneState, DroneAction> for the Drone
 	 * 
@@ -86,7 +89,7 @@ public class DronezMockConfig {
 	public CommandFactory commandFactory()
 	{
 		SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
-		return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName);
+		return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir);
 	}
 	
 	/**

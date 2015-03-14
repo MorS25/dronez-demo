@@ -42,6 +42,7 @@ public class DronezFlightExecutor {
 	@Async
 	public void fly(DronezFlight flight)
 	{
+		
 		drone.executeLaunchSequence();
 		
 		DroneState droneState = webCamObserver.getCurrentState();
@@ -59,7 +60,12 @@ public class DronezFlightExecutor {
 		
 	
 		logger.info("Executing Main Flight");
+		
+		drone.addStateActionSequenceListener(commandFactory);
+		
 		flight.fly(this,commandFactory);
+		
+
 		drone.executeLandingSequence();
 	}
 }
