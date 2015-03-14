@@ -18,9 +18,9 @@ This project is currently configured with an implementation of AbstractCommandFa
 
 1. Uses an independent-dimensions strategy to construct a policy from 3 learned policies for the 3 dimensions:   
 
-i.  Policy<TargetRelativePositionWithVelocityAndRecentActions<LeftRightAction>
-ii.  Policy<TargetRelativePositionWithVelocityAndRecentActions<UpDown>
-iii.  Policy<TargetRelativePositionWithVelocityAndRecentActions<ForwardBackAction>
+*  ``Policy<TargetRelativePositionWithVelocityAndRecentActions<LeftRightAction>``
+*  ``Policy<TargetRelativePositionWithVelocityAndRecentActions<UpDown>``
+*  ``Policy<TargetRelativePositionWithVelocityAndRecentActions<ForwardBackAction>``
 
 2. Assumes that policies are generated from a continuous-state markov decision process, and are [ContinuousStateValueFunctionGreedyPolicy<?> instances]  (https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/ContinuousStateValueFunctionGreedyPolicy.java)s
 
