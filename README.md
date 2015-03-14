@@ -13,3 +13,9 @@ Each [``PolicyCommand<DroneState,P,DroneAction>``](https://github.com/michaellav
 When the Drone receives a [``PolicyCommand<DroneState,P,DroneAction>``](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/commands/PolicyCommand.java), it uses a [``PolicyExecutor<DroneState,P,DroneAction>``](https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/PolicyExecutor.java) along with the encapsulated Policy and PolicyStateMapper to make decisions about which [DroneAction](https://github.com/ml4j/dronez-core/blob/master/src/main/java/org/ml4j/dronez/DroneAction) to take for each iteration, using the latest observed [DroneState](https://github.com/ml4j/dronez-core/blob/master/src/main/java/org/ml4j/dronez/DroneState.java).
 
 The selected [DroneAction](https://github.com/ml4j/dronez-core/blob/master/src/main/java/org/ml4j/dronez/DroneAction.java)s are sent to the Drone to be sent on to the ARDrone.
+
+The goals of this project are to:
+
+1.  Learn reward-maximising ``Policy<TargetRelativeDroneStateWithRecentActions, DroneAction>`` implementations for the aim of minimising distance-to-target.
+2.  Implement AbstractCommandFactory implementation to load these policies into appropriate commands.
+3.  Demonstrate test Flights
