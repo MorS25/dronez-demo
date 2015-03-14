@@ -14,7 +14,7 @@ When the Drone receives a [``PolicyCommand<DroneState,P,DroneAction>``](https://
 
 The selected [DroneAction](https://github.com/ml4j/dronez-core/blob/master/src/main/java/org/ml4j/dronez/DroneAction.java)s are sent to the Drone to be sent on to the ARDrone.
 
-The aim of this project is implement a AbstractCommandFactory that creates commands by using a ''Policy<TargetRelativeDroneStateWithRecentActions, DroneAction>'' so that distance to a specified target can be minimised.  Once we have this implementation,  the aim is to demonstract test flights.
+The aim of this project is implement a AbstractCommandFactory that creates commands by using a ``Policy<TargetRelativeDroneStateWithRecentActions, DroneAction>`` so that distance to a specified target can be minimised.  Once we have this implementation,  the aim is to demonstract test flights.
 
 This project is currently configured with an implementation of AbstractCommandFactory   ( [DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory] (https://github.com/ml4j/dronez-demo/blob/master/src/main/java/org/ml4j/dronez/DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory.java) ) which:
 
@@ -24,7 +24,7 @@ This project is currently configured with an implementation of AbstractCommandFa
 *  ``Policy<TargetRelativePositionWithVelocityAndRecentActions<UpDown>``
 *  ``Policy<TargetRelativePositionWithVelocityAndRecentActions<ForwardBackAction>``
 
-2. Assumes that policies are generated from a continuous-state markov decision process, and are [ContinuousStateValueFunctionGreedyPolicy<?> instances]  (https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/ContinuousStateValueFunctionGreedyPolicy.java)s
+2. Assumes that policies are generated from a continuous-state markov decision process, and are [``ContinuousStateValueFunctionGreedyPolicy<?>`` instances]  (https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/ContinuousStateValueFunctionGreedyPolicy.java)s
 
 3. Loads the 3 policies from serialized files, by name, from the [dronez-policies](https://github.com/ml4j/dronez-policies) project.
 
