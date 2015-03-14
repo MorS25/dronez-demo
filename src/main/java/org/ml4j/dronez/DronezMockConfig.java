@@ -1,7 +1,6 @@
 package org.ml4j.dronez;
 
 import org.machinelearning4j.dronez.commands.CommandFactory;
-import org.machinelearning4j.dronez.commands.LearnedContinuousInnerPolicyCommandFactoryImpl;
 import org.machinelearning4j.dronez.domain.Drone;
 import org.machinelearning4j.dronez.mock.MockDrone;
 import org.machinelearning4j.dronez.mock.MockDroneDimensionModel;
@@ -14,6 +13,7 @@ import org.ml4j.dronez.models.factories.SerializedModelFactory;
 import org.ml4j.dronez.models.learning.DroneModelLearner;
 import org.ml4j.dronez.policy.learning.PolicyLearner;
 import org.ml4j.mdp.Model;
+import org.ml4j.util.SerializationHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,16 @@ public class DronezMockConfig {
 
 	@Value("${policy.recentActionCount}")
 	private int policyRecentActionCount;
+
+
+	@Value("${leftRightContinuousStatePolicy.name}")
+	private String leftRightPolicyName;
 	
+	@Value("${upDownContinuousStatePolicy.name}")
+	private String upDownPolicyName;
+	
+	@Value("${forwardBackContinuousStatePolicy.name}")
+	private String forwardBackPolicyName;
 	
 	/**
 	 * Create a StateActionController<DroneState, DroneAction> for the Drone
@@ -76,8 +85,8 @@ public class DronezMockConfig {
 	@Bean
 	public CommandFactory commandFactory()
 	{
-		return LearnedContinuousInnerPolicyCommandFactoryImpl.create(
-				PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies",policyRecentActionCount);
+		SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
+		return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName);
 	}
 	
 	/**
