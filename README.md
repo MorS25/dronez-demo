@@ -1,6 +1,6 @@
 # dronez-demo
 
-Drone is both a [``StateObserver<DroneState>``](https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/StateObserver.java) and an [``ActionTaker<DroneAction>``](https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/ActionTaker.java).
+[Drone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/domain/Drone.java) is both a [``StateObserver<DroneState>``](https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/StateObserver.java) and an [``ActionTaker<DroneAction>``](https://github.com/ml4j/ml4j-mdp/blob/master/src/main/java/org/ml4j/mdp/ActionTaker.java).
 
 During a Flight, the [Drone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/domain/Drone.java) is sent a series of high-level [``PolicyCommand<DroneState,P,DroneAction>``](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/commands/PolicyCommand.java)s such as [HoverCommand](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/commands/HoverCommand.java) or [TargetTrajectoryCommand](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/commands/TargetTrajectoryCommand.java) - these are created using an [AbstractCommandFactory](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/commands/AbstractCommandFactory.java) implementation.
 
