@@ -20,7 +20,7 @@ The goals of this project are to:
 2.  Implement AbstractCommandFactory implementation to load these policies into appropriate commands.
 3.  Demonstrate test Flights
 
-To fly real [ODCDrone](https://github.com/michaellavelle/dronez/blob/master/src/main/java/org/machinelearning4j/dronez/domain/ODCDrone.java) using webcam position estimation:
+To fly real ARDrone using webcam position estimation:
 
 mvn spring-boot:run -Dspring.profiles.active=ardrone -Djava.awt.headless=false
 
