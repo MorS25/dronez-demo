@@ -93,7 +93,7 @@ public class DronezMockConfig {
 	@Bean
 	public CommandFactory commandFactory()
 	{
-		boolean learnInRealtime = false;
+		boolean learnInRealtime = true;
 		if (learnInRealtime)
 		{
 			return new DronezIndependentDimensionsLearningContinuousStatePolicyCommandFactory(policyRecentActionCount,modelDelayInIterations,historySerializationDir);			
@@ -101,7 +101,9 @@ public class DronezMockConfig {
 		else
 		{
 			SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
-			return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir);
+			boolean delayedPolicy = false;
+
+			return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir,delayedPolicy);
 
 		}
 		
@@ -131,10 +133,10 @@ public class DronezMockConfig {
 		boolean useActualFlightModel = true;
 
 		if (useActualFlightModel) {
-			int modelRecentActionCount = 10;
+			int modelRecentActionCount = 6;
 			return new StatefulDroneStateWithoutActionsModelAdapter(
 					(DroneModel) droneModelFactory().createModel(
-							"droneModel_12032015_4"), modelRecentActionCount);
+							"droneModel_20032015_1"), modelRecentActionCount);
 		} else {
 
 			Model<PositionVelocity, PositionVelocity, LeftRightAction> mockLeftRightModel = new MockDroneDimensionModel<LeftRightAction>(
@@ -168,6 +170,8 @@ public class DronezMockConfig {
 				"droneModel_12032015_3");
 		modelFactory.registerModel(DroneModelLearner.MODEL_CLASS,
 				"droneModel_12032015_4");
+		modelFactory.registerModel(DroneModelLearner.MODEL_CLASS,
+				"droneModel_20032015_1");
 		return modelFactory;
 	}
 	

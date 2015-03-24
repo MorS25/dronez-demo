@@ -110,9 +110,12 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 				
 				StateActionSequenceHistory<DroneStateWithRecentActions, DroneStateWithRecentActions, DroneAction> history1 = StateActionSequenceHistoryConvertingLoader.convert(history, getRecentActionCount());
 				
-				@SuppressWarnings("unused")
 				Model<DroneStateWithRecentActions, DroneStateWithRecentActions, DroneAction> model = modelLearner.learnModel(history1);
 
+				serializationHelper.serialize(model, "model_" + historySerializationDate.getTime());
+
+				
+				
 				LinearApproximationDeltaPositionWithVelocityModel<LeftRightAction> leftRightDeltaModel = serializationHelper.deserialize(LinearApproximationDeltaPositionWithVelocityModel.class, "droneDeltaPositionLeftRightActionModel");
 				LinearApproximationDeltaPositionWithVelocityModel<UpDownAction> upDownDeltaModel = serializationHelper.deserialize(LinearApproximationDeltaPositionWithVelocityModel.class, "droneDeltaPositionUpDownActionModel");
 				LinearApproximationDeltaPositionWithVelocityModel<ForwardBackAction> forwardBackDeltaModel = serializationHelper.deserialize(LinearApproximationDeltaPositionWithVelocityModel.class, "droneDeltaPositionForwardBackActionModel");
