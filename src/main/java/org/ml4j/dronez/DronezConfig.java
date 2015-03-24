@@ -31,6 +31,10 @@ public class DronezConfig {
 	@Value("${historySerializationDir}")
 	private String historySerializationDir;
 	
+
+	@Value("${model.delay}")
+	private int modelDelayInIterations;
+	
 	/**
 	 * Create a StateActionController<DroneState, DroneAction> for the Drone
 	 * 
@@ -68,9 +72,17 @@ public class DronezConfig {
 	@Bean
 	public CommandFactory commandFactory()
 	{
-		SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
-		return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir);
-		
+		boolean learnInRealtime = false;
+		if (learnInRealtime)
+		{
+			return new DronezIndependentDimensionsLearningContinuousStatePolicyCommandFactory(policyRecentActionCount,modelDelayInIterations,historySerializationDir);			
+		}
+		else
+		{
+			SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
+			return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir);
+
+		}
 	}
 
 	

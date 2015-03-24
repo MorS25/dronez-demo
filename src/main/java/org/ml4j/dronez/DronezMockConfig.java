@@ -27,6 +27,11 @@ public class DronezMockConfig {
 	private int policyRecentActionCount;
 
 
+	@Value("${model.delay}")
+	private int modelDelayInIterations;
+
+	
+	
 	@Value("${leftRightContinuousStatePolicy.name}")
 	private String leftRightPolicyName;
 	
@@ -88,8 +93,19 @@ public class DronezMockConfig {
 	@Bean
 	public CommandFactory commandFactory()
 	{
-		SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
-		return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir);
+		boolean learnInRealtime = false;
+		if (learnInRealtime)
+		{
+			return new DronezIndependentDimensionsLearningContinuousStatePolicyCommandFactory(policyRecentActionCount,modelDelayInIterations,historySerializationDir);			
+		}
+		else
+		{
+			SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
+			return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir);
+
+		}
+		
+		
 	}
 	
 	/**

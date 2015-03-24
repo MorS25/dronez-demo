@@ -16,24 +16,24 @@ public class DemoFlight implements DronezFlight {
 	@Override
 	public void fly(DronezFlightExecutor flightExecutor,CommandFactory commandFactory) {
 	
-		logger.info("No-op for 50 iterations");
-		flightExecutor.executeCommand(commandFactory.createNoOpCommand(50));
+		logger.info("No-op for 25 iterations");
+		flightExecutor.executeCommand(commandFactory.createNoOpCommand(25));
 		
 		
-		for (int i = 0; i < 10; i ++)
+		for (int i = 0; i < 20; i ++)
 		{
-			logger.info("Hovering round hover position for 200 iterations");
+			logger.info("Hovering round hover position for 50 iterations");
 
 			
-			flightExecutor.executeTargetTrajectoryCommand(commandFactory.createHoverCommand(HOVER_POSITION, 200));
+			flightExecutor.executeTargetTrajectoryCommand(commandFactory.createHoverCommand(HOVER_POSITION, 50));
 			
 			// As policies are static, this only saves the state action sequence history
 			commandFactory.updatePolicies();
 		}
 		
-		logger.info("No-op for 50 iterations");
+		logger.info("No-op for 25 iterations");
 		
-		flightExecutor.executeCommand(commandFactory.createNoOpCommand(50));
+		flightExecutor.executeCommand(commandFactory.createNoOpCommand(25));
 	}
 
 }
