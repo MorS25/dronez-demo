@@ -79,14 +79,16 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 	public void updatePolicies() {
 
 		
-		learnModels();
-		
-		learnPolicies();
-	
 		if (historySerializationDate == null)
 		{
 			historySerializationDate = new Date();
 		}
+		
+		learnModels();
+		
+		learnPolicies();
+	
+		
 		
 		serializationHelper.serialize(history, "flight_" + historySerializationDate.getTime());
 		serializationHelper.serialize(leftRightPolicy, "policy_lr_" + historySerializationDate.getTime());
