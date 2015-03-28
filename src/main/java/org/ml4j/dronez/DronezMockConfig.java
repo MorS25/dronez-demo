@@ -140,7 +140,7 @@ public class DronezMockConfig {
 			int modelRecentActionCount = 10;
 			return new StatefulDroneStateWithoutActionsModelAdapter(
 					 droneModelFactory().createModel(
-							"droneModel_27032015_1"), modelRecentActionCount);
+							"droneModel_28032015_2"), modelRecentActionCount);
 		
 		} else {
 
@@ -181,6 +181,8 @@ public class DronezMockConfig {
 				"droneModel_27032015_1");
 		modelFactory.registerModel(DroneModelLearner.MODEL_CLASS,
 				"droneModel_28032015_1");
+		modelFactory.registerModel(DroneModelLearner.MODEL_CLASS,
+				"droneModel_28032015_2");
 		return modelFactory;
 	}
 	

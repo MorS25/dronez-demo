@@ -104,7 +104,7 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 	
 				// Consider only the first of the six recent actions, and ignore latest action
 				boolean[] recentActionsAndLatestActionMask 
-				 = new boolean[]{true,false,false,false,false,false,false};
+				 = new boolean[]{true,true,true,true,false,false,false ,false,false,false,false};
 				
 			
 				// Create our model learner.
