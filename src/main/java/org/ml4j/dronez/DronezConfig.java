@@ -80,7 +80,7 @@ public class DronezConfig {
 		else
 		{
 			SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
-			boolean delayedPolicy = false;
+			boolean delayedPolicy = true;
 			return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir,delayedPolicy);
 
 		}
