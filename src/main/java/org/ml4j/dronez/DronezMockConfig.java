@@ -97,7 +97,7 @@ public class DronezMockConfig {
 	@Bean
 	public CommandFactory commandFactory()
 	{
-		boolean learnInRealtime = true;
+		boolean learnInRealtime = false;
 		if (learnInRealtime)
 		{
 			return new DronezIndependentDimensionsLearningContinuousStatePolicyCommandFactory(policyRecentActionCount,modelDelayInIterations,historySerializationDir);			
@@ -179,6 +179,8 @@ public class DronezMockConfig {
 				"droneModel_20032015_1");
 		modelFactory.registerModel(DroneModelLearner.MODEL_CLASS,
 				"droneModel_27032015_1");
+		modelFactory.registerModel(DroneModelLearner.MODEL_CLASS,
+				"droneModel_28032015_1");
 		return modelFactory;
 	}
 	
