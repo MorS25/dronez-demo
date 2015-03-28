@@ -12,6 +12,7 @@ import org.ml4j.dronez.models.SingleDimensionDroneDistanceToTargetPositionModel;
 import org.ml4j.dronez.models.learning.DroneModelLearner;
 import org.ml4j.dronez.models.learning.ModelLearner;
 import org.ml4j.dronez.policy.learning.ContinuousStateMarkovDecisionProcessDronePolicyLearner;
+import org.ml4j.dronez.policy.learning.PolicyLearner;
 import org.ml4j.dronez.util.StateActionSequenceHistoryConvertingLoader;
 import org.ml4j.mdp.ContinuousStateDelayedMdpValueFunctionGreedyPolicy;
 import org.ml4j.mdp.Model;
@@ -46,10 +47,12 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 		
 		serializationHelper = new SerializationHelper(historySerializationDir);
 
+		SerializationHelper policySerializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
+
 		
-		this.leftRightPolicy = serializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_lr_1427556889255");
-		this.upDownPolicy = serializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_ud_1427556889255");
-		this.forwardBackPolicy = serializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_fb_1427556889255");
+		this.leftRightPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_lr_1427557210474");
+		this.upDownPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_ud_1427557210474");
+		this.forwardBackPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_fb_1427557210474");
 
 		//this.leftRightPolicy = new SimpleLeftRightPolicy();
 		//this.leftRightPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<LeftRightAction>,LeftRightAction>(LeftRightAction.ALL_ACTIONS);
