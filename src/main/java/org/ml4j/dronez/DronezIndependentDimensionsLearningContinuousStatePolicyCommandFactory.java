@@ -124,7 +124,7 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 				// = new boolean[]{true,true,true,true,false,false,false ,false,false,false,false};
 				
 				boolean[] recentActionsAndLatestActionMask 
-				 = new boolean[]{true,false,false,false,false,false,false };
+				 = new boolean[]{true,true,true,true,true,false,false,false,false,false,false };
 				
 			
 				// Create our model learner.
