@@ -50,16 +50,16 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 		SerializationHelper policySerializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
 
 		
-		this.leftRightPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_lr_1427557210474");
-		this.upDownPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_ud_1427557210474");
-		this.forwardBackPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_fb_1427557210474");
+		//this.leftRightPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_lr_1427557210474");
+		//this.upDownPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_ud_1427557210474");
+		//this.forwardBackPolicy = policySerializationHelper.deserialize(ContinuousStateDelayedMdpValueFunctionGreedyPolicy.class, "policy_fb_1427557210474");
 
 		//this.leftRightPolicy = new SimpleLeftRightPolicy();
-		//this.leftRightPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<LeftRightAction>,LeftRightAction>(LeftRightAction.ALL_ACTIONS);
+		this.leftRightPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<LeftRightAction>,LeftRightAction>(LeftRightAction.ALL_ACTIONS);
 		//this.upDownPolicy = new SimpleUpDownPolicy();
-		//this.upDownPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<UpDownAction>,UpDownAction>(UpDownAction.ALL_ACTIONS);
+		this.upDownPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<UpDownAction>,UpDownAction>(UpDownAction.ALL_ACTIONS);
 		//this.forwardBackPolicy = new SimpleForwardBackPolicy();
-		//this.forwardBackPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<ForwardBackAction>,ForwardBackAction>(ForwardBackAction.ALL_ACTIONS);
+		this.forwardBackPolicy = new RandomPolicy<TargetRelativePositionWithVelocityAndRecentActions<ForwardBackAction>,ForwardBackAction>(ForwardBackAction.ALL_ACTIONS);
 		this.modelDelayInIterations = modelDelayInIterations;
 	}
 	
@@ -126,7 +126,7 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 				// = new boolean[]{true,true,true,true,false,false,false ,false,false,false,false};
 				
 				boolean[] recentActionsAndLatestActionMask 
-				 = new boolean[]{true,true,true,true,true,false,false,false,false,false,false };
+				 = new boolean[]{true,true,true,false,false,false,false,false,false,false,false };
 				
 			
 				// Create our model learner.
