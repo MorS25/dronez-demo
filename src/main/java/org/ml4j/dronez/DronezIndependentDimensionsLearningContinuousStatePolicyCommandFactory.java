@@ -65,24 +65,26 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 	
 	protected void learnPolicies()
 	{
+		
+		
 		ContinuousStateMarkovDecisionProcessDronePolicyLearner<LeftRightAction> 
 		
 		leftRightLearner 
 		 = new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<LeftRightAction>
-			(leftRightModel, LeftRightAction.ALL_ACTIONS);
+			(leftRightModel, LeftRightAction.ALL_ACTIONS,modelDelayInIterations);
 		
 		ContinuousStateMarkovDecisionProcessDronePolicyLearner<UpDownAction> 
 		
 		upDownLearner 
 		 = new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<UpDownAction>
-			(upDownModel, UpDownAction.ALL_ACTIONS);
+			(upDownModel, UpDownAction.ALL_ACTIONS,modelDelayInIterations);
 		
 		
 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<ForwardBackAction> 
 		
 		forwardBackLearner 
 		 = new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<ForwardBackAction>
-			(forwardBackModel, ForwardBackAction.ALL_ACTIONS);
+			(forwardBackModel, ForwardBackAction.ALL_ACTIONS,modelDelayInIterations);
 		
 		
 		leftRightPolicy = leftRightLearner.learnPolicy();
