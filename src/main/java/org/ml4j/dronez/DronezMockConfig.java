@@ -6,7 +6,6 @@ import org.machinelearning4j.dronez.mock.MockDrone;
 import org.machinelearning4j.dronez.mock.MockDroneDimensionModel;
 import org.machinelearning4j.dronez.mock.MockDroneModel;
 import org.machinelearning4j.dronez.mock.MockWebCamObserver;
-import org.ml4j.dronez.models.DroneModel;
 import org.ml4j.dronez.models.StatefulDroneStateWithoutActionsModelAdapter;
 import org.ml4j.dronez.models.factories.ModelFactory;
 import org.ml4j.dronez.models.factories.SerializedModelFactory;
@@ -61,7 +60,7 @@ public class DronezMockConfig {
 	@Bean
 	public Drone drone() {
 		return new MockDrone(droneObserver(), mockDroneModel(),
-				0, 160);
+				modelDelayInIterations, 160);
 	}
 	
 	/**
@@ -104,9 +103,9 @@ public class DronezMockConfig {
 		}
 		else
 		{
+
 			SerializationHelper serializationHelper = new SerializationHelper(PolicyLearner.class.getClassLoader(), "org/ml4j/dronez/policies");
 			boolean delayedPolicy = true;
-
 			return new DronezIndependentDimensionsLearnedContinuousStatePolicyCommandFactory(policyRecentActionCount,serializationHelper, leftRightPolicyName, upDownPolicyName, forwardBackPolicyName,historySerializationDir,delayedPolicy);
 
 		}

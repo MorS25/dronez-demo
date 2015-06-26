@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.machinelearning4j.dronez.commands.AbstractIndependentDimensionsCommandFactory;
-import org.machinelearning4j.dronez.policy.SimpleForwardBackPolicy;
-import org.machinelearning4j.dronez.policy.SimpleLeftRightPolicy;
-import org.machinelearning4j.dronez.policy.SimpleUpDownPolicy;
 import org.ml4j.dronez.models.MockDimModelWithoutDelay;
 import org.ml4j.dronez.models.SingleDimensionDroneDistanceToTargetPositionModel;
 import org.ml4j.dronez.models.learning.DroneModelLearner;
@@ -14,7 +11,9 @@ import org.ml4j.dronez.models.learning.ModelLearner;
 import org.ml4j.dronez.policy.learning.ContinuousStateMarkovDecisionProcessDronePolicyLearner;
 import org.ml4j.dronez.policy.learning.PolicyLearner;
 import org.ml4j.dronez.util.StateActionSequenceHistoryConvertingLoader;
-import org.ml4j.mdp.ContinuousStateDelayedMdpValueFunctionGreedyPolicy;
+import org.ml4j.mdp.AbstractValueFunctionGreedyPolicy;
+import org.ml4j.mdp.ActionValueFunctionDelayedModelAdapter;
+import org.ml4j.mdp.ActionValueFunctionModelAdapter;
 import org.ml4j.mdp.Model;
 import org.ml4j.mdp.Policy;
 import org.ml4j.mdp.RandomPolicy;
@@ -70,21 +69,24 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 		ContinuousStateMarkovDecisionProcessDronePolicyLearner<LeftRightAction> 
 		
 		leftRightLearner 
-		 = new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<LeftRightAction>
-			(leftRightModel, LeftRightAction.ALL_ACTIONS,modelDelayInIterations);
+		 = modelDelayInIterations > 0 ? new ContinuousStateMarkovDecisionProcessDronePolicyLearner<LeftRightAction>
+			(leftRightModel, LeftRightAction.ALL_ACTIONS,modelDelayInIterations) : new ContinuousStateMarkovDecisionProcessDronePolicyLearner<LeftRightAction>
+			(leftRightModel, LeftRightAction.ALL_ACTIONS);
 		
 		ContinuousStateMarkovDecisionProcessDronePolicyLearner<UpDownAction> 
 		
 		upDownLearner 
-		 = new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<UpDownAction>
-			(upDownModel, UpDownAction.ALL_ACTIONS,modelDelayInIterations);
+		 = modelDelayInIterations > 0 ? new ContinuousStateMarkovDecisionProcessDronePolicyLearner<UpDownAction>
+			(upDownModel, UpDownAction.ALL_ACTIONS,modelDelayInIterations) : new ContinuousStateMarkovDecisionProcessDronePolicyLearner<UpDownAction>
+			(upDownModel, UpDownAction.ALL_ACTIONS);
 		
 		
 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<ForwardBackAction> 
 		
 		forwardBackLearner 
-		 = new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<ForwardBackAction>
-			(forwardBackModel, ForwardBackAction.ALL_ACTIONS,modelDelayInIterations);
+		 = modelDelayInIterations > 0 ? new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<ForwardBackAction>
+			(forwardBackModel, ForwardBackAction.ALL_ACTIONS,modelDelayInIterations) : new 	ContinuousStateMarkovDecisionProcessDronePolicyLearner<ForwardBackAction>
+			(forwardBackModel, ForwardBackAction.ALL_ACTIONS);
 		
 		
 		leftRightPolicy = leftRightLearner.learnPolicy();
@@ -113,9 +115,46 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 		serializationHelper.serialize(leftRightPolicy, "policy_lr_" + historySerializationDate.getTime());
 		serializationHelper.serialize(upDownPolicy, "policy_ud_" + historySerializationDate.getTime());
 		serializationHelper.serialize(forwardBackPolicy, "policy_fb_" + historySerializationDate.getTime());
+		
+		serializeActionValueFunction(serializationHelper,leftRightPolicy,leftRightModel,LeftRightAction.ALL_ACTIONS,"lr");
+		serializeActionValueFunction(serializationHelper,upDownPolicy,upDownModel,UpDownAction.ALL_ACTIONS,"ud");
+		serializeActionValueFunction(serializationHelper,forwardBackPolicy,forwardBackModel,ForwardBackAction.ALL_ACTIONS,"fb");
 
+		
 		init();
 	}
+	
+	
+	private <A extends NumericAction> void serializeActionValueFunction(SerializationHelper helper,Policy<TargetRelativePositionWithVelocityAndRecentActions<A>,A> policy,Model<TargetRelativePositionWithVelocityAndRecentActions<A>,TargetRelativePositionWithVelocityAndRecentActions<A>,A> model,A[] actions,String suffix)
+	{
+		if (policy instanceof AbstractValueFunctionGreedyPolicy)
+		{
+		
+			AbstractValueFunctionGreedyPolicy<TargetRelativePositionWithVelocityAndRecentActions<A>,A>
+			 valueFunctionPolicy = (AbstractValueFunctionGreedyPolicy<TargetRelativePositionWithVelocityAndRecentActions<A>,A>)policy;
+			
+			
+			if (modelDelayInIterations > 0)
+			{
+				ActionValueFunctionModelAdapter<TargetRelativePositionWithVelocityAndRecentActions<A>,A> actionValueFunction
+				= new ActionValueFunctionDelayedModelAdapter<TargetRelativePositionWithVelocityAndRecentActions<A>,A>(((AbstractValueFunctionGreedyPolicy<TargetRelativePositionWithVelocityAndRecentActions<A>,A>) valueFunctionPolicy).getValueFunction(),model,Arrays.asList(actions),modelDelayInIterations);
+			
+				serializationHelper.serialize(actionValueFunction, "actionValueFunction_" + suffix + "_" +  historySerializationDate.getTime());
+
+			}
+			else 
+			{
+			
+			ActionValueFunctionModelAdapter<TargetRelativePositionWithVelocityAndRecentActions<A>,A> actionValueFunction
+			= new ActionValueFunctionModelAdapter<TargetRelativePositionWithVelocityAndRecentActions<A>,A>(((AbstractValueFunctionGreedyPolicy<TargetRelativePositionWithVelocityAndRecentActions<A>,A>) valueFunctionPolicy).getValueFunction(),model,Arrays.asList(actions));
+		
+			serializationHelper.serialize(actionValueFunction, "actionValueFunction_" + suffix + "_" +  historySerializationDate.getTime());
+
+			}
+		}
+		
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	private void learnModels() {
@@ -148,11 +187,19 @@ public class DronezIndependentDimensionsLearningContinuousStatePolicyCommandFact
 				SingleDimensionDroneDistanceToTargetPositionModel<UpDownAction> upDownModel1 = new SingleDimensionDroneDistanceToTargetPositionModel<UpDownAction>(upDownDeltaModel,-2.5,2.5,-0.5,0.5,Arrays.asList(UpDownAction.ALL_ACTIONS),getRecentActionCount());
 				SingleDimensionDroneDistanceToTargetPositionModel<ForwardBackAction> forwardBackModel1 = new SingleDimensionDroneDistanceToTargetPositionModel<ForwardBackAction>(forwardBackDeltaModel,-2.5,2.5,-0.5,0.5,Arrays.asList(ForwardBackAction.ALL_ACTIONS),getRecentActionCount());
 
+				if (modelDelayInIterations > 0)
+				{
 	
-				leftRightModel = new MockDimModelWithoutDelay<LeftRightAction>(leftRightModel1,LeftRightAction.NO_OP,getRecentActionCount(),modelDelayInIterations);
-				upDownModel = new MockDimModelWithoutDelay<UpDownAction>(upDownModel1,UpDownAction.NO_OP,getRecentActionCount(),modelDelayInIterations);
-				forwardBackModel = new MockDimModelWithoutDelay<ForwardBackAction>(forwardBackModel1,ForwardBackAction.NO_OP,getRecentActionCount(),modelDelayInIterations);
-		
+					leftRightModel = new MockDimModelWithoutDelay<LeftRightAction>(leftRightModel1,LeftRightAction.NO_OP,getRecentActionCount(),modelDelayInIterations);
+					upDownModel = new MockDimModelWithoutDelay<UpDownAction>(upDownModel1,UpDownAction.NO_OP,getRecentActionCount(),modelDelayInIterations);
+					forwardBackModel = new MockDimModelWithoutDelay<ForwardBackAction>(forwardBackModel1,ForwardBackAction.NO_OP,getRecentActionCount(),modelDelayInIterations);
+				}
+				else
+				{
+					leftRightModel = leftRightModel1;
+					upDownModel = upDownModel1;
+					forwardBackModel = forwardBackModel1;
+				}
 				
 	}
 
